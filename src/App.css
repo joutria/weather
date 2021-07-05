@@ -1,38 +1,163 @@
+* {
+  margin: 0;
+  padding: 0;
+  transition: 0.25s;
+}
+
+html,
+body,
+#root,
+.App {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
 .App {
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  background: linear-gradient(rgb(125, 125, 125), rgb(255, 255, 255));
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+
+.Icon,
+.Info {
+  display: flex;
+  flex-direction: column;
+  border-radius: 1em;
+  min-width: 10em;
+  min-height: 10em;
+  margin: 0.5em;
+}
+
+.Icon {
+  align-items: center;
+  justify-content: center;
+}
+
+.Info {
+  justify-content: center;
+  padding: 0.5em;
+  align-items: flex-start;
+}
+
+.Icon > img {
+  width: 80%;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  background: linear-gradient(rgb(173, 216, 230), rgba(255, 255, 255,1));
+  padding: 1.5em;
+  border-radius: 1.5em;
+  box-shadow:  0.2em 0.2em 0em rgb(88, 88, 88);
+}
+
+.search,
+button {
+  margin: 0.5em;
+  padding: 1em;
+  font-size: 1.2rem;
+}
+
+.temperature{
+  font-family: 'Tourney', cursive;
+  font-size: 3rem;
+  font-weight: 900;
+  color: rgb(0, 140, 255);
+}
+
+.weather{
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: rgb(0, 140, 255);
+}
+
+.city{
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: rgb(87, 179, 255);
+}
+
+button{
+  background: white;
+  border: 0.2em solid rgb(0, 140, 255);
+  border-radius: 1em;
+  color: rgb(0, 140, 255);
+  font-weight: bold;
+}
+
+button:hover{
+  background: rgb(0, 140, 255);
   color: white;
+  box-shadow: 0.2em 0.2em 0em rgb(0, 17, 255);
 }
 
-.App-link {
-  color: #61dafb;
+button:active{
+  transform: translateY(4px);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.Location{
+  font-family: 'Tourney', cursive;
+  font-size: 5rem;
+  font-weight: 900;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background: white;
+}
+
+.hidden{
+  visibility: hidden;
+}
+
+@keyframes jump {
+  0%{
+    transform: translateY(0px);
   }
-  to {
-    transform: rotate(360deg);
+  10%{
+    transform: translateY(0px);
   }
+  20%{
+    transform: translateY(0px);
+  }
+  30%{
+    transform: translateY(0px);
+  }
+  40%{
+    transform: translateY(0px);
+  }
+  50%{
+    transform: translateY(0px);
+  }
+  60%{
+    transform: translateY(0px);
+  }
+  70%{
+    transform: translateY(0px);
+  }
+  80%{
+    transform: translateY(0px);
+  }
+  90%{
+    transform: translateY(-0.25em);
+  }
+  100%{
+    transform: translateY(0px);
+  }
+}
+
+span{
+  position: relative;
+  animation-name: jump;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-direction: normal;
+  animation-timing-function: ease;
 }
