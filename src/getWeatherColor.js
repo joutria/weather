@@ -10,6 +10,7 @@ export function getWeatherLinearGradient(code, is_day, darkMode) {
     main = darkMode ? '#232526' : '#a8edea';
   }
   const bg = darkMode ? '#181818' : '#fff';
-  // Linear gradient: bg at top 50%, main color at bottom 50%
+  // Linear gradient: bg at top 5.
+  // 0%, main color at bottom 50%
   return `linear-gradient(to bottom, ${bg} 0%, ${main} 100%)`;
 }

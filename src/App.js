@@ -14,20 +14,19 @@ function App() {
   const [data, setData] = useState(null);
   const [toggler, setToggler] = useState(true); // true = C, false = F
   const [darkMode, setDarkMode] = useState(false);
-  const [showLocation, setShowLocation] = useState(true);
   const [showWeather, setShowWeather] = useState(false);
   const [locationAllowed, setLocationAllowed] = useState(false);
+  const [lastCoords, setLastCoords] = useState(null);
+  const [locationPending, setLocationPending] = useState(true); // New: track if location request is pending
 
   // Ask for geolocation on mount
   useEffect(() => {
+    setLocationPending(true);
     navigator.geolocation.getCurrentPosition(success, error);
-    // eslint-disable-next-line
   }, []);
 
-  // Store last location coordinates
-  const [lastCoords, setLastCoords] = useState(null);
-
   function success(pos) {
+    setLocationPending(false);
     const crd = pos.coords;
     setLastCoords({ lat: crd.latitude, lon: crd.longitude });
     setLocationAllowed(true);
@@ -36,14 +35,13 @@ function App() {
       .then((res) => res.json())
       .then((data) => {
         setData(data);
-        setShowLocation(false);
         setShowWeather(true);
       });
   }
 
   function error(err) {
+    setLocationPending(false);
     console.warn(`ERROR(${err.code}): ${err.message}`);
-    setShowLocation(false);
     setLocationAllowed(false);
   }
 
@@ -89,7 +87,7 @@ function App() {
       className={`App${darkMode ? ' dark' : ''}`}
       style={bg ? { background: bg, minHeight: '100vh', minWidth: '100vw', transition: 'background 0.5s' } : {}}
     >
-  <div className="mode-toggle-container">
+      <div className="mode-toggle-container">
         <span className="sun-moon-emoji" style={{fontSize: '1.7rem'}}>{darkMode ? '🌙' : '☀️'}</span>
         <label className="switch">
           <input
@@ -131,7 +129,7 @@ function App() {
           </div>
         </>
       )}
-      {showLocation && <Location />}
+      {locationPending && <Location />}
     </div>
   );
 }
