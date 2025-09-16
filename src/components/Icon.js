@@ -1,18 +1,7 @@
-import { useEffect, useState } from "react";
-
-function Icon(props) {
-  // this state simplifies the use of data
-  const [temporary, setTemporary] = useState("");
-
-  useEffect(() => {
-    if (props.data) {
-      setTemporary(props.data);
-    }
-  }, [props.data]);
-
+function Icon({ data }) {
   return (
     <div className="Icon">
-      <img src={temporary ? temporary.current.condition.icon : ""} />
+      <img src={data ? data.current.condition.icon : ""} alt="weather icon" />
     </div>
   );
 }

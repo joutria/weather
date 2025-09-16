@@ -1,26 +1,251 @@
+.location-btn {
+  margin-left: 1em;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+
+.location-flex {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.location-loader {
+  font-size: 2.5rem;
+  margin-bottom: 0.5em;
+  animation: spin 1.2s linear infinite;
+}
+
+.location-title {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+
+
+.location-info {
+  font-size: 1rem;
+  margin-top: 1.2em;
+  max-width: 350px;
+  text-align: center;
+  color: #666;
+}
+/* Responsive styles for mobile and small screens */
+@media (max-width: 700px) {
+  html, body, #root, .App {
+    min-width: 0;
+    min-height: 100vh;
+    width: 100vw;
+    height: 100vh;
+    font-size: 4vw;
+    overflow-x: hidden;
+    box-sizing: border-box;
+  }
+
+  .App {
+    padding: 0.5em;
+    width: 100vw;
+    max-width: 100vw;
+    box-sizing: border-box;
+  }
+  .container {
+    flex-direction: column;
+    min-width: 0;
+    max-width: 90vw;
+    border-radius: 1em;
+    padding: 0;
+    box-shadow: 0 1px 4px rgba(88,88,88,0.12);
+    box-sizing: border-box;
+    overflow-x: hidden;
+  }
+  .Icon, .Info {
+    min-height: unset;
+    margin: 0.25em;
+    align-items: center;
+    text-align: center;
+    box-sizing: border-box;
+  }
+  .Icon > img {
+    max-width: 40%;
+    min-width: 60px;
+    max-width: 120px;
+  }
+  .Info > p {
+    margin: auto;
+  }
+  .search {
+    width: 95vw;
+    font-size: 1em;
+    padding: 0.7em;
+    box-sizing: border-box;
+  }
+  .button, #cf {
+    width: min(95vw, 250px);
+    font-size: 1em;
+    padding: 0.7em 0;
+    margin: 0.5em 0;
+    min-width: 0;
+    max-width: 100vw;
+    display: block;
+    box-sizing: border-box;
+  }
+  .switch {
+    width: 44px;
+    height: 24px;
+  }
+  .slider:before {
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+  }
+  .Location {
+    font-size: 1.1em;
+    padding: 1em 0.5em;
+    width: 100vw;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow-x: hidden;
+  }
+}
+
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 * {
   margin: 0;
   padding: 0;
   transition: 0.25s;
 }
 
-html,
-body,
-#root,
-.App {
+.weather-animated-span {
+  position: relative;
+  animation-name: jump;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-direction: normal;
+  animation-timing-function: ease;
+}
+
+
+html, body, #root, .App {
   display: flex;
+  justify-content: space-around;
   width: 100%;
   height: 100%;
+  font-family: 'Roboto', Arial, sans-serif;
+}
+
+.App.dark, html.dark, body.dark, #root.dark {
+  color: #f1f1f1;
+}
+
+.App.dark .container {
+  background: #232323;
+  box-shadow: 0.2em 0.2em 0em #111;
+}
+
+.App.dark button, .App.dark .mode-toggle {
+  background: #232323;
+  color: #f1f1f1;
+  border: 0.2em solid #90caf9;
+}
+
+.App.dark button:hover, .App.dark .mode-toggle:hover {
+  background: #90caf9;
+  color: #232323;
+}
+
+.App.dark .temperature, .App.dark .weather, .App.dark .city {
+  color: #90caf9;
+}
+
+.App.dark .Location {
+  background: #181818;
+  color: #90caf9;
+}
+
+
+/* Switch styles for dark/light mode */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ffe066;
+  transition: background 0.4s;
+  border-radius: 34px;
+}
+
+.switch input:checked + .slider {
+  background-color: #232323;
+}
+
+
+.sun-moon-emoji {
+  transition: color 0.4s;
+}
+
+.slider:before {
+  content: "";
+  position: absolute;
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: #fff;
+  transition: transform 0.4s, background 0.4s;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.switch input:checked + .slider:before {
+  transform: translateX(26px);
+  background: #bdbdbd;
 }
 
 .App {
   text-align: center;
-  background: linear-gradient(rgb(125, 125, 125), rgb(255, 255, 255));
+  background: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
+  min-height: 100vh;
+  min-width: 100vw;
+  transition: background 0.5s;
 }
+
+.mode-toggle-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
 
 .Icon,
 .Info {
@@ -50,34 +275,95 @@ body,
 .container {
   display: flex;
   flex-direction: row;
-  background: linear-gradient(rgb(173, 216, 230), rgba(255, 255, 255,1));
+  background: #f7f7fa;
   padding: 1.5em;
+  margin: 0em 1em;
   border-radius: 1.5em;
   box-shadow:  0.2em 0.2em 0em rgb(88, 88, 88);
 }
 
-.search,
-button {
+
+.search {
   margin: 0.5em;
   padding: 1em;
   font-size: 1.2rem;
+  border: 2px solid #90caf9;
+  border-radius: 0.7em;
+  outline: none;
+  background: #f7f7fa;
+  color: #232323;
+  transition: border 0.2s;
+}
+
+.search:focus {
+  border: 2px solid #1976d2;
+}
+
+
+.button, #cf {
+  margin: 0.5em;
+  padding: 1em 2em;
+  font-size: 1.2rem;
+  background: #90caf9;
+  color: #232323;
+  border: none;
+  border-radius: 0.7em;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  transition: background 0.2s, color 0.2s, transform 0.1s;
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+}
+
+
+.button:hover, #cf:hover {
+  background: #1976d2;
+  color: #fff;
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 4px 12px rgba(25, 118, 210, 0.15);
+}
+
+
+.button:active, #cf:active {
+  transform: translateY(2px) scale(0.98);
+  box-shadow: 0 1px 3px rgba(25, 118, 210, 0.10);
+}
+
+.App.dark .button, .App.dark #cf {
+  background: #232323;
+  color: #90caf9;
+  border: 2px solid #90caf9;
+}
+
+.App.dark .button:hover, .App.dark #cf:hover {
+  background: #90caf9;
+  color: #232323;
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 4px 12px rgba(144, 202, 249, 0.15);
+}
+
+.App.dark .button:active, .App.dark #cf:active {
+  transform: translateY(2px) scale(0.98);
+  box-shadow: 0 1px 3px rgba(144, 202, 249, 0.10);
 }
 
 .temperature{
   font-family: 'Tourney', cursive;
-  font-size: 3rem;
+  font-size: min(6vw, 3em);
   font-weight: 900;
   color: rgb(0, 140, 255);
 }
 
 .weather{
-  font-size: 1.5rem;
+  font-size: min(3vw, 1.5em);
   font-weight: bold;
   color: rgb(0, 140, 255);
 }
 
 .city{
-  font-size: 1.5rem;
+  font-size: min(3vw, 1.5em);
   font-weight: bold;
   color: rgb(87, 179, 255);
 }
@@ -111,53 +397,4 @@ button:active{
   height: 100%;
   position: absolute;
   background: white;
-}
-
-.hidden{
-  visibility: hidden;
-}
-
-@keyframes jump {
-  0%{
-    transform: translateY(0px);
-  }
-  10%{
-    transform: translateY(0px);
-  }
-  20%{
-    transform: translateY(0px);
-  }
-  30%{
-    transform: translateY(0px);
-  }
-  40%{
-    transform: translateY(0px);
-  }
-  50%{
-    transform: translateY(0px);
-  }
-  60%{
-    transform: translateY(0px);
-  }
-  70%{
-    transform: translateY(0px);
-  }
-  80%{
-    transform: translateY(0px);
-  }
-  90%{
-    transform: translateY(-0.25em);
-  }
-  100%{
-    transform: translateY(0px);
-  }
-}
-
-span{
-  position: relative;
-  animation-name: jump;
-  animation-duration: 2s;
-  animation-iteration-count: infinite;
-  animation-direction: normal;
-  animation-timing-function: ease;
 }
