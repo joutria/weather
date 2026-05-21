@@ -1,4 +1,5 @@
 {
+  "name": "weather",
   "version": 2,
   "builds": [
     {
