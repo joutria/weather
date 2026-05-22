@@ -6,20 +6,18 @@ import Info from "./components/Info";
 import SearchBar from "./components/SearchBar";
 import Location from "./components/Location";
 
-
-const API_KEY = "c980394f68784e91915160418210307";
+const API_KEY = process.env.REACT_APP_WEATHER_API_KEY || "";
 
 function App() {
   const [value, setValue] = useState("");
   const [data, setData] = useState(null);
-  const [toggler, setToggler] = useState(true); // true = C, false = F
+  const [toggler, setToggler] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
   const [showWeather, setShowWeather] = useState(false);
   const [locationAllowed, setLocationAllowed] = useState(false);
   const [lastCoords, setLastCoords] = useState(null);
-  const [locationPending, setLocationPending] = useState(true); // New: track if location request is pending
+  const [locationPending, setLocationPending] = useState(true);
 
-  // Ask for geolocation on mount
   useEffect(() => {
     setLocationPending(true);
     navigator.geolocation.getCurrentPosition(success, error);
@@ -45,14 +43,13 @@ function App() {
     setLocationAllowed(false);
   }
 
-  // Compute URL for search
   const getUrl = () => {
-    const str2 = value.charAt(0).toUpperCase() + value.slice(1);
-    return `https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${str2}&aqi=no`;
+    const sanitized = encodeURIComponent(value.trim());
+    return `https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${sanitized}&aqi=no`;
   };
 
-  // Handler for search
   const handleSearch = () => {
+    if (!value.trim()) return;
     fetch(getUrl())
       .then((res) => res.json())
       .then((data) => {
@@ -65,7 +62,6 @@ function App() {
       });
   };
 
-  // Handler to fetch weather for last known location
   const handleLocationWeather = () => {
     if (!lastCoords) return;
     const url = `https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${lastCoords.lat},${lastCoords.lon}&aqi=no`;
@@ -77,11 +73,11 @@ function App() {
       });
   };
 
-  // Compute linear gradient background
   let bg = undefined;
   if (showWeather && data && data.current && data.current.condition && data.current.condition.code) {
     bg = getWeatherLinearGradient(data.current.condition.code, data.current.is_day, darkMode);
   }
+
   return (
     <div
       className={`App${darkMode ? ' dark' : ''}`}
@@ -111,21 +107,21 @@ function App() {
             <Info data={data} toggler={toggler} />
           </div>
           <div>
-          <button
-            id="cf"
-            onClick={() => setToggler((t) => !t)}
-            className="button"
-          >
-            ºC / ºF
-          </button>
-          {locationAllowed && lastCoords && (
             <button
-              className="button location-btn"
-              onClick={handleLocationWeather}
+              id="cf"
+              onClick={() => setToggler((t) => !t)}
+              className="button"
             >
-              <span role="img" aria-label="location">📍</span> My Location
+              ºC / ºF
             </button>
-          )}
+            {locationAllowed && lastCoords && (
+              <button
+                className="button location-btn"
+                onClick={handleLocationWeather}
+              >
+                <span role="img" aria-label="location">📍</span> My Location
+              </button>
+            )}
           </div>
         </>
       )}
