@@ -1,6 +1,6 @@
 {
-  "buildCommand": "npm install && npm run build",
+  "buildCommand": "pnpm build",
   "outputDirectory": "build",
-  "installCommand": "npm install",
+  "installCommand": "pnpm install",
   "framework": "create-react-app"
 }
