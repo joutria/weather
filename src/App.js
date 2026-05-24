@@ -6,7 +6,7 @@ import Info from "./components/Info";
 import SearchBar from "./components/SearchBar";
 import Location from "./components/Location";
 
-const API_KEY = process.env.REACT_APP_WEATHER_API_KEY || "";
+const API_KEY = import.meta.env.VITE_WEATHER_API_KEY || "";
 
 function App() {
   const [value, setValue] = useState("");
